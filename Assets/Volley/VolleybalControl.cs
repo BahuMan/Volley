@@ -16,12 +16,13 @@ public class VolleybalControl : MonoBehaviour
     [SerializeField] Rigidbody2D _rigidBall;
     [SerializeField] Rigidbody2D _rigidSpeler1;
     [SerializeField] Rigidbody2D _rigidComputer;
+    [SerializeField] float maxSpeed;
 
     int speler1Score = 0;
     int computerScore = 0;
 
     public enum VolleyStatusEnum { BEGIN, SPEL, OPSLAG}
-    private VolleyStatusEnum VolleyStatus = VolleyStatusEnum.BEGIN;
+    public VolleyStatusEnum VolleyStatus = VolleyStatusEnum.BEGIN;
 
     public VolleyStatusEnum Status { get => VolleyStatus; private set => VolleyStatus = value; }
 
@@ -41,6 +42,11 @@ public class VolleybalControl : MonoBehaviour
         {
             Debug.Log("Bal buiten spel... reset");
             StartWillekeurig();
+        }
+
+        if (_rigidBall.velocity.magnitude > maxSpeed)
+        {
+            _rigidBall.velocity = maxSpeed * _rigidBall.velocity.normalized;
         }
     }
 
@@ -70,6 +76,7 @@ public class VolleybalControl : MonoBehaviour
         }
         //now that the player has hit the ball, it can interact with gravity again:
         _rigidBall.gravityScale = zwaartekracht;
+        this.VolleyStatus = VolleyStatusEnum.SPEL;
     }
 
     private void HangStil(Vector2 positie)
