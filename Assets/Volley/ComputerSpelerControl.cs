@@ -74,34 +74,13 @@ public class ComputerSpelerControl : MonoBehaviour
 
     private IEnumerator Opslag()
     {
-        while (!onGround) //land safely
-        {
-            wantToJump = false;
-            yield return null;
-        }
+        Debug.Log("return to start pos");
+        _rigid.velocity = Vector2.zero;
+        transform.position = new Vector2(startx, transform.position.y);
+        yield return new WaitForSeconds(1f);
 
-        Debug.Log("Moving to start position");
-
-        float start = _startPunt.transform.position.x+2f;
-        float me = transform.position.x;
-
-        while (Mathf.Abs(start - me) > 0.3f)
-        {
-            //move (slowly) left or right towards start point?
-            if (start < me) _rigid.velocity = new Vector2(-_speed / 4f, _rigid.velocity.y);
-            else            _rigid.velocity = new Vector2(_speed / 8f, _rigid.velocity.y);
-
-            yield return null;
-            me = transform.position.x;
-        }
-
-        //while (onGround)
-        //{
-            Debug.Log("serve!");
-            //@TODO: add a bit of randomness
-            _rigid.velocity = new Vector2(-_speed, _jump);
-            yield return null;
-        //}
+        Debug.Log("BOOM");
+        _rigid.velocity = new Vector2(-_speed, _jump);
 
     }
 
