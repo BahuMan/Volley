@@ -68,7 +68,18 @@ public class VolleybalControl : MonoBehaviour
     private IEnumerator StartOpslagIntern(Vector2 startpos)
     {
         float zwaartekracht = _rigidBall.gravityScale;
+        this.VolleyStatus = VolleyStatusEnum.OPSLAG;
+
+        //get ball out of sight for a few moments:
+        this.GetComponent<Renderer>().enabled = false;
+        HangStil(new Vector2(0, 9));
+
+        yield return new WaitForSeconds(2.0f);
+
+        //OK, ball can be visible again:
+        this.GetComponent<Renderer>().enabled = true;
         HangStil(startpos);
+
         this.VolleyStatus = VolleyStatusEnum.OPSLAG;
         while (this.VolleyStatus == VolleyStatusEnum.OPSLAG)
         {

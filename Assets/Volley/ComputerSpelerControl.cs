@@ -77,7 +77,7 @@ public class ComputerSpelerControl : MonoBehaviour
         Debug.Log("return to start pos");
         _rigid.velocity = Vector2.zero;
         transform.position = new Vector2(startx, transform.position.y);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
 
         Debug.Log("BOOM");
         _rigid.velocity = new Vector2(-_speed, _jump);
